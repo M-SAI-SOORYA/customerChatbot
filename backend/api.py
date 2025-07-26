@@ -5,8 +5,17 @@ from schemas import ChatRequest, ChatResponse
 # from llm import ask_llm
 from datetime import datetime, timezone
 from llm import ask_llm_with_context
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or your frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
